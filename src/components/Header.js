@@ -1,15 +1,16 @@
 import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Icons from 'react-native-vector-icons/AntDesign';
+import {Typography, Colors} from '../styles';
 
-const HeaderButton = ({buttontitle, iconName}) => {
+const HeaderButton = ({buttontitle, iconName, onPress}) => {
   const styles = {
     buttonStyle: {
       margin: 15,
     },
   };
   return (
-    <TouchableOpacity style={styles.buttonStyle}>
+    <TouchableOpacity style={styles.buttonStyle} onPress={onPress}>
       {iconName ? (
         <Icons name={iconName} size={20} color="white" />
       ) : (
@@ -19,26 +20,30 @@ const HeaderButton = ({buttontitle, iconName}) => {
   );
 };
 const HeaderTitle = ({title}) => {
+  const styles = {
+    titleStyle: {
+      color: Colors.white,
+    },
+  };
   return (
     <View>
-      <Text
-        style={{
-          fontFamily: 'Product Sans Regular',
-          fontSize: 20,
-          color: 'white',
-        }}>
-        {title}
-      </Text>
+      <Text style={[styles.titleStyle, Typography.ButtonText]}>{title}</Text>
     </View>
   );
 };
 
-const Header = ({leftIconName, rightIconName, headerTitle}) => {
+const Header = ({
+  leftIconName,
+  rightIconName,
+  headerTitle,
+  leftButtonOnPress,
+  rightButtonOnPress,
+}) => {
   return (
     <View style={styles.container}>
-      <HeaderButton iconName={leftIconName} />
+      <HeaderButton iconName={leftIconName} onPress={leftButtonOnPress} />
       <HeaderTitle title={headerTitle} />
-      <HeaderButton iconName={rightIconName} />
+      <HeaderButton iconName={rightIconName} onPress={rightButtonOnPress} />
     </View>
   );
 };
@@ -49,7 +54,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     height: 50,
-    backgroundColor: '#2a2c41',
+    backgroundColor: Colors.primary,
   },
 });
 
