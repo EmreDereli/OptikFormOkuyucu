@@ -1,22 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React from 'react';
-import {StyleSheet, StatusBar} from 'react-native';
+import Navigation from './src/navigation/Navigation';
 
 const App = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-    </>
-  );
+  return <Navigation />;
 };
-
-const styles = StyleSheet.create({});
 
 export default App;
