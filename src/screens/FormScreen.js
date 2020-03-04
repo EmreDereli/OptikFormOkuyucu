@@ -62,7 +62,7 @@ const FormOption = ({index}) => {
   );
 };
 
-const FormScreen = () => {
+const FormScreen = ({navigation}) => {
   const [count, setCount] = useState(0);
   useEffect(() => {}, [count]);
   const renderForm = () => {
@@ -76,6 +76,7 @@ const FormScreen = () => {
   return (
     <View style={{flex: 1}}>
       <Header
+        leftButtonOnPress={() => navigation.goBack()}
         leftIconName="close"
         headerTitle="Form Tanımla"
         rightIconName="check"
@@ -90,7 +91,5 @@ const FormScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default FormScreen;
