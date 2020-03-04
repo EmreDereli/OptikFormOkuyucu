@@ -3,7 +3,7 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Typography, Colors} from '../styles';
 
-const CustomButton = ({title, onPress, type}) => {
+const CustomButton = ({title, onPress, type, disabled}) => {
   let ICON_NAME;
   if (type === 'scan') {
     ICON_NAME = 'file-find';
@@ -14,6 +14,7 @@ const CustomButton = ({title, onPress, type}) => {
   }
   return (
     <TouchableOpacity
+      disabled={disabled}
       style={[type ? styles.container : styles.noIconStyle, styles.shadow]}
       onPress={onPress}>
       {type ? (

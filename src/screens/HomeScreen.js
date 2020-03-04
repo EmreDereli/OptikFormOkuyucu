@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, StatusBar} from 'react-native';
+import {StyleSheet, View, Text, StatusBar, Alert, Keyboard} from 'react-native';
 import CustomButton from '../components/CustomButton';
 import Modal from 'react-native-modal';
 import CustomInput from '../components/CustomInput';
 import {Colors, Typography} from '../styles';
+import {Formik, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
+
 const LogoText = () => {
   const styles = {
     container: {
@@ -57,9 +60,28 @@ const HomeScreen = ({navigation}) => {
         isVisible={isVisible}
         onBackdropPress={() => setIsVisible(false)}
         onSwipeComplete={() => setIsVisible(false)}
-        swipeDirection={['up', 'left', 'right', 'down']}
+        animationInTiming={2000}
+        swipeDirection={['down']}
         style={styles.bottomHalfModalStyle}>
         <View style={styles.scanModalStyle}>
+          <View
+            style={{
+              width: 40,
+              height: 2,
+              backgroundColor: Colors.primary,
+              alignSelf: 'center',
+            }}
+          />
+          <View
+            style={{
+              marginTop: 5,
+              marginBottom: 20,
+              width: 20,
+              height: 2,
+              backgroundColor: Colors.primary,
+              alignSelf: 'center',
+            }}
+          />
           <CustomButton title="Kamera ile Tara" />
           <CustomButton title="Dosyadan Tara" />
         </View>
@@ -68,21 +90,89 @@ const HomeScreen = ({navigation}) => {
         isVisible={isVisibleResultModal}
         onBackdropPress={() => setIsVisibleResultModal(false)}
         onSwipeComplete={() => setIsVisibleResultModal(false)}
-        swipeDirection={['up', 'left', 'right', 'down']}
+        swipeDirection={['down']}
         style={styles.bottomHalfModalStyle}>
         <View style={styles.resultModalStyle}>
-          <CustomInput
-            title="Sınav Kodu"
-            placeholder="Sınav Kodunu Giriniz..."
+          <View
+            style={{
+              width: 40,
+              height: 2,
+              backgroundColor: Colors.primary,
+              alignSelf: 'center',
+            }}
           />
-          <CustomInput
-            title="Öğrenci Numarası"
-            placeholder="Öğrenci Numarası Giriniz..."
+          <View
+            style={{
+              marginTop: 5,
+              marginBottom: 20,
+              width: 20,
+              height: 2,
+              backgroundColor: Colors.primary,
+              alignSelf: 'center',
+            }}
           />
-          <CustomButton
-            title="Sonuçları Göster"
-            onPress={() => navigation.navigate('Result')}
-          />
+          <Formik
+            initialValues={{examNo: '', studentNo: ''}}
+            onSubmit={values => {
+              Alert.alert(JSON.stringify(values));
+              Keyboard.dismiss();
+            }}
+            validationSchema={Yup.object().shape({
+              examNo: Yup.number()
+                .min(100000, '**Sınav Numarası 6 haneli bir sayı olmalıdır')
+                .max(999999, '**Sınav Numarası 6 haneli bir sayı olmalıdır')
+
+                .required('Zorunlu Alan'),
+              studentNo: Yup.number()
+                .min(100000, '**Öğrenci Numarası 6 haneli bir sayı olmalıdır')
+                .max(999999, '**Öğrenci Numarası 6 haneli bir sayı olmalıdır')
+                .required('Zorunlu Alan'),
+            })}>
+            {({handleChange, handleSubmit, values, errors, isValid}) => (
+              <View>
+                <CustomInput
+                  onChangeText={handleChange('examNo')}
+                  value={values.examNo}
+                  title="Sınav Kodu"
+                  placeholder="Sınav Kodunu Giriniz..."
+                />
+                {errors.examNo ? (
+                  <Text
+                    style={{
+                      color: 'red',
+                      fontSize: 10,
+                      marginHorizontal: 30,
+                      marginBottom: 10,
+                    }}>
+                    {errors.examNo}
+                  </Text>
+                ) : null}
+
+                <CustomInput
+                  onChangeText={handleChange('studentNo')}
+                  value={values.studentNo}
+                  title="Öğrenci Numarası"
+                  placeholder="Öğrenci Numarası Giriniz..."
+                />
+                {errors.studentNo ? (
+                  <Text
+                    style={{
+                      color: 'red',
+                      fontSize: 10,
+                      marginHorizontal: 30,
+                      marginBottom: 10,
+                    }}>
+                    {errors.studentNo}
+                  </Text>
+                ) : null}
+                <CustomButton
+                  disabled={!isValid}
+                  title="Sonuçları Göster"
+                  onPress={handleSubmit}
+                />
+              </View>
+            )}
+          </Formik>
         </View>
       </Modal>
     </View>
@@ -106,7 +196,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   scanModalStyle: {
-    height: 200,
+    height: 250,
     backgroundColor: Colors.white,
     borderTopRightRadius: 45,
     borderTopLeftRadius: 45,
