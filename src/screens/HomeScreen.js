@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, StatusBar, Alert, Keyboard} from 'react-native';
 import CustomButton from '../components/CustomButton';
-import Modal from 'react-native-modal';
 import CustomInput from '../components/CustomInput';
+import Modal from 'react-native-modal';
 import {Colors, Typography} from '../styles';
-import {Formik, ErrorMessage} from 'formik';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
-
+import ImagePicker from 'react-native-image-picker';
 const LogoText = () => {
   const styles = {
     container: {
@@ -32,7 +32,67 @@ const LogoText = () => {
   );
 };
 
+const openCamera = () => {
+  const options = {
+    title: 'Resim Seç',
+    storageOptions: {
+      skipBackup: true,
+      path: 'images',
+    },
+  };
+  ImagePicker.launchCamera(options, response => {
+    // Same code as in above section!
+    if (response.didCancel) {
+      console.log('User cancelled image picker');
+    } else if (response.error) {
+      console.log('ImagePicker Error: ', response.error);
+    } else if (response.customButton) {
+      console.log('User tapped custom button: ', response.customButton);
+    } else {
+      const source = {uri: response.uri};
+
+      // You can also display the image using data:
+      // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+      console.log(response.data);
+      // this.setState({
+      //   avatarSource: source,
+      // });
+    }
+  });
+};
+const openGallery = () => {
+  const options = {
+    title: 'Resim Seç',
+    storageOptions: {
+      skipBackup: true,
+      path: 'images',
+    },
+  };
+  ImagePicker.launchImageLibrary(options, response => {
+    // Same code as in above section!
+    if (response.didCancel) {
+      console.log('User cancelled image picker');
+    } else if (response.error) {
+      console.log('ImagePicker Error: ', response.error);
+    } else if (response.customButton) {
+      console.log('User tapped custom button: ', response.customButton);
+    } else {
+      const source = {uri: response.uri};
+
+      // You can also display the image using data:
+      // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+      // setAvatar(source);
+      console.log(response.data);
+      // this.setState({
+      //   avatarSource: source,
+      // });
+    }
+  });
+};
+
 const HomeScreen = ({navigation}) => {
+  const [avatar, setAvatar] = useState('');
+
   const [isVisible, setIsVisible] = useState(false);
   const [isVisibleResultModal, setIsVisibleResultModal] = useState(false);
 
@@ -82,8 +142,8 @@ const HomeScreen = ({navigation}) => {
               alignSelf: 'center',
             }}
           />
-          <CustomButton title="Kamera ile Tara" />
-          <CustomButton title="Dosyadan Tara" />
+          <CustomButton onPress={openCamera} title="Kamera ile Tara" />
+          <CustomButton onPress={openGallery} title="Dosyadan Tara" />
         </View>
       </Modal>
       <Modal

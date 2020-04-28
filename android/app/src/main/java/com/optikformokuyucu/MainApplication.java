@@ -9,6 +9,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.airbnb.android.react.lottie.LottiePackage;
+import com.imagepicker.ImagePickerPackage; // <-- add this import
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           packages.add(new LottiePackage());
+          packages.add(new ImagePickerPackage());
           return packages;
         }
 
