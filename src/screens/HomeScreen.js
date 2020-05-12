@@ -7,6 +7,7 @@ import {Colors, Typography} from '../styles';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import ImagePicker from 'react-native-image-picker';
+import {getStudents, postImage} from '../utils/FetchDataFromApi';
 const LogoText = () => {
   const styles = {
     container: {
@@ -53,7 +54,10 @@ const openCamera = () => {
 
       // You can also display the image using data:
       // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
       console.log(response.data);
+      const r = postImage(response.data);
+      console.log(r);
       // this.setState({
       //   avatarSource: source,
       // });
@@ -83,6 +87,8 @@ const openGallery = () => {
       // const source = { uri: 'data:image/jpeg;base64,' + response.data };
       // setAvatar(source);
       console.log(response.data);
+      const r = postImage(response.data);
+      console.log(r);
       // this.setState({
       //   avatarSource: source,
       // });
@@ -95,7 +101,12 @@ const HomeScreen = ({navigation}) => {
 
   const [isVisible, setIsVisible] = useState(false);
   const [isVisibleResultModal, setIsVisibleResultModal] = useState(false);
-
+  // useEffect(() => {
+  //   const response = getStudents();
+  //   response.then(r => {
+  //     console.log('namee:', r);
+  //   });
+  // }, []);
   return (
     <View style={styles.container}>
       <LogoText />

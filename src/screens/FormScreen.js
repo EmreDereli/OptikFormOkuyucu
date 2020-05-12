@@ -8,9 +8,41 @@ import {
 } from 'react-native';
 import Header from '../components/Header';
 import CustomInput from '../components/CustomInput';
+import AnswerButton from '../components/AnswerButton';
+import AnswerGroup from '../components/AnswerGroup';
+import {Fonts} from '../styles';
+// const AnswerButton = ({onPress, answer}) => {
+//   const styles = {
+//     optionStyle: {
+//       width: 30,
+//       height: 30,
+//       borderColor: 'black',
+//       borderWidth: 1,
+//       borderRadius: 30 / 2,
+//       justifyContent: 'center',
+//       alignItems: 'center',
+//       margin: 5,
+//     },
+//   };
+
+//   const onPressButton = () => {
+//     onPress();
+//     control = true;
+//   };
+
+//   return (
+//     <TouchableOpacity
+//       style={styles.optionStyle}
+//       onPress={() => onPressButton()}>
+//       <Text>{answer}</Text>
+//     </TouchableOpacity>
+//   );
+// };
 
 const FormScreen = ({navigation}) => {
   const [count, setCount] = useState(0);
+  const [formName, setFormName] = useState('');
+
   const [answer, setAnswer] = useState([]);
   let dizi = [];
   useEffect(() => {}, [count]);
@@ -45,43 +77,19 @@ const FormScreen = ({navigation}) => {
             justifyContent: 'center',
             alignItems: 'center',
             margin: 5,
+            fontFamily: Fonts.ProductSansRegular,
           }}>
           <Text style={{color: 'white'}}>{index}</Text>
         </View>
 
-        <TouchableOpacity
-          style={styles.optionStyle}
-          onPress={() => {
-            dizi.push('A');
-
-            dizi.map(item => {
-              console.log(item);
-              console.log('dizi uzunluğu', dizi.length);
-            });
-          }}>
-          <Text>A</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.optionStyle}
-          onPress={() => {
-            dizi.push('B');
-
-            dizi.map(item => {
-              console.log(item);
-              console.log('dizi uzunluğu', dizi.length);
-            });
-          }}>
-          <Text>B</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.optionStyle}>
-          <Text>C</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.optionStyle}>
-          <Text>D</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.optionStyle}>
-          <Text>E</Text>
-        </TouchableOpacity>
+        <AnswerGroup
+          checked={answer[index]}
+          getAnswer={val => {
+            let newArr = [...answer];
+            newArr[index] = val;
+            setAnswer(newArr);
+          }}
+        />
       </View>
     );
   };
@@ -107,10 +115,13 @@ const FormScreen = ({navigation}) => {
         placeholder="Soru Sayısı Giriniz"
         onChangeText={text => setCount(text)}
       />
-      <CustomInput title="Form Adı" placeholder="Form Adını Giriniz" />
-      {answer.map(item => {
-        return <Text>{item}</Text>;
-      })}
+      <CustomInput
+        title="Form Adı"
+        placeholder="Form Adını Giriniz"
+        onChangeText={text => {
+          setFormName(text);
+        }}
+      />
       <ScrollView>{renderForm()}</ScrollView>
     </View>
   );
