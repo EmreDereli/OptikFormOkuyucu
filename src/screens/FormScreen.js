@@ -10,7 +10,8 @@ import Header from '../components/Header';
 import CustomInput from '../components/CustomInput';
 import AnswerButton from '../components/AnswerButton';
 import AnswerGroup from '../components/AnswerGroup';
-import {Fonts} from '../styles';
+import {Fonts, Colors} from '../styles';
+import {postAnswer} from '../utils/FetchDataFromApi';
 // const AnswerButton = ({onPress, answer}) => {
 //   const styles = {
 //     optionStyle: {
@@ -72,7 +73,7 @@ const FormScreen = ({navigation}) => {
           style={{
             width: 30,
             height: 30,
-            backgroundColor: 'black',
+            backgroundColor: Colors.primary,
             borderRadius: 30 / 2,
             justifyContent: 'center',
             alignItems: 'center',
@@ -106,18 +107,29 @@ const FormScreen = ({navigation}) => {
     <View style={{flex: 1}}>
       <Header
         leftButtonOnPress={() => navigation.goBack()}
+        rightButtonOnPress={async () => {
+          let answerData = answer.toString();
+          let data = {
+            examNo: formName,
+            answerList: answerData.split(',').join(''),
+          };
+
+          await postAnswer(data);
+        }}
         leftIconName="close"
         headerTitle="Form Tanımla"
         rightIconName="check"
       />
       <CustomInput
+        keyboardType="number-pad"
         title="Soru Sayısı"
         placeholder="Soru Sayısı Giriniz"
         onChangeText={text => setCount(text)}
       />
       <CustomInput
-        title="Form Adı"
-        placeholder="Form Adını Giriniz"
+        keyboardType="number-pad"
+        title="Sınav Kodu"
+        placeholder="Sınav Kodunu Giriniz"
         onChangeText={text => {
           setFormName(text);
         }}

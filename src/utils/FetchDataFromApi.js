@@ -24,3 +24,38 @@ export async function postImage(imageData) {
       return err;
     });
 }
+
+export async function postAnswer(data) {
+  return await Axios.post('http://192.168.1.111:3000/answers', data, null)
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.log(err);
+      return err;
+    });
+}
+export async function getResults(examNo, studentNo) {
+  return await Axios.get(
+    'http://192.168.1.111:3000/exams/' + examNo + '/' + studentNo,
+    null,
+    null,
+  )
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.log(err);
+      return err;
+    });
+}
+export async function getAllResults(examNo) {
+  return await Axios.get('http://192.168.1.43:3000/exams/' + examNo, null, null)
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      console.log(err);
+      return err;
+    });
+}

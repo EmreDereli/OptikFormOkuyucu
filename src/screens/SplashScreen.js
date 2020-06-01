@@ -6,7 +6,7 @@ import {Typography, Colors} from '../styles/index.js';
 const SplashScreen = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('Home');
+      navigation.replace('Home');
     }, 5000);
   });
 
@@ -43,7 +43,7 @@ const SplashScreen = ({navigation}) => {
         <Text style={[Typography.Logo, styles.logoTextStyle]}>Okuyucu</Text>
       </View>
       <LottieView
-        source={require('../../4692-scanner.json')}
+        source={require('../../scanner.json')}
         style={{width: 200, height: 200}}
         autoPlay
         loop

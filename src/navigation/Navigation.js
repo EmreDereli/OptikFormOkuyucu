@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import FormScreen from '../screens/FormScreen';
 import ResultScreen from '../screens/ResultScreen';
+import AllResultScreen from '../screens/AllResultScreen';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,13 @@ const Navigation = () => {
         <Stack.Screen
           name="Result"
           component={ResultScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="AllResult"
+          component={AllResultScreen}
           options={{
             headerShown: false,
           }}

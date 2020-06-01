@@ -7,7 +7,7 @@ import {Colors, Typography} from '../styles';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import ImagePicker from 'react-native-image-picker';
-import {getStudents, postImage} from '../utils/FetchDataFromApi';
+import {getResults, postImage, getAllResults} from '../utils/FetchDataFromApi';
 const LogoText = () => {
   const styles = {
     container: {
@@ -98,7 +98,24 @@ const openGallery = () => {
 
 const HomeScreen = ({navigation}) => {
   const [avatar, setAvatar] = useState('');
+  const getStudentResult = (examNo, studentNo) => {
+    if (studentNo === '' || studentNo === null) {
+      const res = getAllResults(examNo);
+      res.then(r => {
+        setIsVisibleResultModal(false);
+        navigation.navigate('AllResult', {data: r.data});
+      });
+    } else {
+      const res = getResults(examNo, studentNo);
+      setIsVisibleResultModal(false);
 
+      res.then(r => {
+        navigation.navigate('Result', {data: r.data});
+      });
+    }
+
+    //console.log(res);
+  };
   const [isVisible, setIsVisible] = useState(false);
   const [isVisibleResultModal, setIsVisibleResultModal] = useState(false);
   // useEffect(() => {
@@ -184,10 +201,9 @@ const HomeScreen = ({navigation}) => {
           />
           <Formik
             initialValues={{examNo: '', studentNo: ''}}
-            onSubmit={values => {
-              Alert.alert(JSON.stringify(values));
-              Keyboard.dismiss();
-            }}
+            onSubmit={values =>
+              getStudentResult(values.examNo, values.studentNo)
+            }
             validationSchema={Yup.object().shape({
               examNo: Yup.number()
                 .min(100000, '**Sınav Numarası 6 haneli bir sayı olmalıdır')
@@ -196,12 +212,12 @@ const HomeScreen = ({navigation}) => {
                 .required('Zorunlu Alan'),
               studentNo: Yup.number()
                 .min(100000, '**Öğrenci Numarası 6 haneli bir sayı olmalıdır')
-                .max(999999, '**Öğrenci Numarası 6 haneli bir sayı olmalıdır')
-                .required('Zorunlu Alan'),
+                .max(999999, '**Öğrenci Numarası 6 haneli bir sayı olmalıdır'),
             })}>
             {({handleChange, handleSubmit, values, errors, isValid}) => (
               <View>
                 <CustomInput
+                  keyboardType="number-pad"
                   onChangeText={handleChange('examNo')}
                   value={values.examNo}
                   title="Sınav Kodu"
@@ -220,6 +236,7 @@ const HomeScreen = ({navigation}) => {
                 ) : null}
 
                 <CustomInput
+                  keyboardType="number-pad"
                   onChangeText={handleChange('studentNo')}
                   value={values.studentNo}
                   title="Öğrenci Numarası"

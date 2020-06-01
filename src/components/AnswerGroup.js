@@ -71,13 +71,14 @@ const styles = StyleSheet.create({
   checkedOptionStyle: {
     width: 30,
     height: 30,
-    borderColor: '#007fff',
+    borderColor: Colors.primary,
     borderWidth: 1,
     borderRadius: 30 / 2,
     justifyContent: 'center',
     alignItems: 'center',
     margin: 5,
-    backgroundColor: '#007fff',
+    // backgroundColor: '#007fff',
+    backgroundColor: Colors.primary,
   },
   checkedTextColor: {
     fontFamily: Fonts.ProductSansRegular,

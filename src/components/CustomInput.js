@@ -2,7 +2,13 @@ import React from 'react';
 import {StyleSheet, View, Text, StatusBar} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 
-const CustomInput = ({title, placeholder, onChangeText, value}) => {
+const CustomInput = ({
+  title,
+  placeholder,
+  onChangeText,
+  value,
+  keyboardType,
+}) => {
   const _onChangeText = text => {
     onChangeText(text);
   };
@@ -26,6 +32,7 @@ const CustomInput = ({title, placeholder, onChangeText, value}) => {
     <View style={styles.container}>
       <Text style={styles.titleTextStyle}>{title}</Text>
       <TextInput
+        keyboardType={keyboardType}
         value={value}
         onChangeText={text => _onChangeText(text)}
         placeholder={placeholder}
