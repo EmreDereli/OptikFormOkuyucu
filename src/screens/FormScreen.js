@@ -4,6 +4,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Alert,
   ScrollView,
 } from 'react-native';
 import Header from '../components/Header';
@@ -12,33 +13,6 @@ import AnswerButton from '../components/AnswerButton';
 import AnswerGroup from '../components/AnswerGroup';
 import {Fonts, Colors} from '../styles';
 import {postAnswer} from '../utils/FetchDataFromApi';
-// const AnswerButton = ({onPress, answer}) => {
-//   const styles = {
-//     optionStyle: {
-//       width: 30,
-//       height: 30,
-//       borderColor: 'black',
-//       borderWidth: 1,
-//       borderRadius: 30 / 2,
-//       justifyContent: 'center',
-//       alignItems: 'center',
-//       margin: 5,
-//     },
-//   };
-
-//   const onPressButton = () => {
-//     onPress();
-//     control = true;
-//   };
-
-//   return (
-//     <TouchableOpacity
-//       style={styles.optionStyle}
-//       onPress={() => onPressButton()}>
-//       <Text>{answer}</Text>
-//     </TouchableOpacity>
-//   );
-// };
 
 const FormScreen = ({navigation}) => {
   const [count, setCount] = useState(0);
@@ -113,7 +87,6 @@ const FormScreen = ({navigation}) => {
             examNo: formName,
             answerList: answerData.split(',').join(''),
           };
-
           await postAnswer(data);
         }}
         leftIconName="close"

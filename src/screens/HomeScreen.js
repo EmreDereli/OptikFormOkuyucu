@@ -108,9 +108,10 @@ const HomeScreen = ({navigation}) => {
     } else {
       const res = getResults(examNo, studentNo);
       setIsVisibleResultModal(false);
-
+      console.log('res', res);
       res.then(r => {
-        navigation.navigate('Result', {data: r.data});
+        console.log('r', r);
+        navigation.navigate('Result', {data: r});
       });
     }
 

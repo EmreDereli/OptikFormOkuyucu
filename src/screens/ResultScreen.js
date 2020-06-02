@@ -86,6 +86,56 @@ const AnswerView = ({studentAnswer, examAnswer}) => {
       indexler.push(elementIndex);
       dizi.push(element);
       console.log(dizi);
+    } else if (studentAnswer[index] === 'X') {
+      let a = index + 1 + '' + studentAnswer[index].toUpperCase();
+      const element = (
+        <Text
+          style={{
+            margin: 5,
+            color: 'red',
+            fontFamily: Fonts.ProductSansRegular,
+          }}>
+          {a}
+        </Text>
+      );
+      const elementIndex = (
+        <Text
+          style={{
+            margin: 5,
+            color: 'green',
+            fontFamily: Fonts.ProductSansRegular,
+          }}>
+          {index + 1 + '' + examAnswer[index]}
+        </Text>
+      );
+      indexler.push(elementIndex);
+      dizi.push(element);
+      console.log(dizi);
+    } else if (studentAnswer[index] === '_') {
+      let a = index + 1 + '-';
+      const element = (
+        <Text
+          style={{
+            margin: 5,
+            color: 'red',
+            fontFamily: Fonts.ProductSansRegular,
+          }}>
+          {a}
+        </Text>
+      );
+      const elementIndex = (
+        <Text
+          style={{
+            margin: 5,
+            color: 'green',
+            fontFamily: Fonts.ProductSansRegular,
+          }}>
+          {index + 1 + '' + examAnswer[index]}
+        </Text>
+      );
+      indexler.push(elementIndex);
+      dizi.push(element);
+      console.log(dizi);
     } else {
       let a = index + 1 + '' + studentAnswer[index].toUpperCase();
       const element = (

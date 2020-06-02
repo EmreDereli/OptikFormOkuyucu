@@ -42,7 +42,7 @@ export async function getResults(examNo, studentNo) {
     null,
   )
     .then(res => {
-      return res;
+      return res.data;
     })
     .catch(err => {
       console.log(err);
@@ -50,7 +50,11 @@ export async function getResults(examNo, studentNo) {
     });
 }
 export async function getAllResults(examNo) {
-  return await Axios.get('http://192.168.1.43:3000/exams/' + examNo, null, null)
+  return await Axios.get(
+    'http://192.168.1.111:3000/exams/' + examNo,
+    null,
+    null,
+  )
     .then(res => {
       return res;
     })
